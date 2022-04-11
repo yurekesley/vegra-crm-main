@@ -22,31 +22,29 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class
         ]);
 
-        // if (!User::where('email', env('DEFAULT_ADMIN_EMAIL'))->exists()) {
-        //     User::create(
-        //         [
-        //             'name' => __('Administrador'),
-        //             'email' => env('DEFAULT_ADMIN_EMAIL'),
-        //             'email_verified_at' => now(),
-        //             'password' => Hash::make(env('DEFAULT_ADMIN_PASSWORD', 'P@$$w0rd')),
-        //             'user_type' => 'admin',
-        //             'user_status' => 'active',
-        //         ]);
-        // }
+         if (!User::where('email', env('DEFAULT_ADMIN_EMAIL'))->exists()) {
+             User::create(
+                 [
+                     'name' => __('Administrador'),
+                     'email' => env('DEFAULT_ADMIN_EMAIL'),
+                     'email_verified_at' => now(),
+                     'password' => Hash::make(env('DEFAULT_ADMIN_PASSWORD', 'P@$$w0rd')),
+                     'user_type' => 'admin',
+                     'user_status' => 'active',
+                 ]);
+         }
 
-        // $accessProfile = AccessProfile::updateOrCreate(
-        //     ['name' => __('Administrador')],
-        //     ['active' => true]);
+         $accessProfile = AccessProfile::updateOrCreate(
+             ['name' => __('Administrador')],
+             ['active' => true]);
 
-        // $user = User::where('email', env('DEFAULT_ADMIN_EMAIL'))->first();
+         $user = User::where('email', env('DEFAULT_ADMIN_EMAIL'))->first();
 
-        // if ($user != null) {
-        //     $user->access_profile_id = $accessProfile->id;
-        //     $user->save();
-        // }
+         if ($user != null) {
+             $user->access_profile_id = $accessProfile->id;
+             $user->save();
+         }
 
-        // 
-
-        // $accessProfile->permissions()->sync(Permission::select('id')->where('active', true)->get());
+        $accessProfile->permissions()->sync(Permission::select('id')->where('active', true)->get());
     }
 }
